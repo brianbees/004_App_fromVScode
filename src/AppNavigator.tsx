@@ -11,7 +11,6 @@ import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import PastScoresScreen from '../screens/PastScoresScreen';
 import AboutScreen from '../screens/AboutScreen';
-import NumberSelectorScreen from '../screens/NumberSelectorScreen';
 import ScoreScreen from '../screens/ScoreScreen';
 import Number1Screen from '../screens/Number1Screen';
 import Number2Screen from '../screens/Number2Screen';
@@ -21,6 +20,23 @@ import WinnersScreen from '../screens/winners';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+export const playStackRef = React.createRef();
+function PlayStack() {
+  return (
+    <Stack.Navigator
+      key="PlayStack"
+      ref={playStackRef}
+      screenOptions={{ headerTitleAlign: 'center', headerShadowVisible: false }}>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Number1" component={Number1Screen} />
+      <Stack.Screen name="Number2" component={Number2Screen} />
+      <Stack.Screen name="Number3" component={Number3Screen} />
+      <Stack.Screen name="Number4" component={Number4Screen} />
+      <Stack.Screen name="Score" component={ScoreScreen} />
+      <Stack.Screen name="Winners" component={WinnersScreen} />
+    </Stack.Navigator>
+  );
+}
 
 function NumberStack() {
   return (
@@ -30,7 +46,7 @@ function NumberStack() {
         headerShadowVisible: false,
       }}
     >
-  <Stack.Screen name="Number Selector" component={NumberSelectorScreen} />
+  // Removed Number Selector screen
       <Stack.Screen name="Number1" component={Number1Screen} />
       <Stack.Screen name="Number2" component={Number2Screen} />
       <Stack.Screen name="Number3" component={Number3Screen} />
@@ -55,6 +71,7 @@ function TabNavigatorWithInsets() {
   const MIN_BOTTOM_PAD = Platform.OS === 'android' ? 40 : 32;
   const bottomPad = Math.max(insets.bottom, MIN_BOTTOM_PAD);
 
+  const navigationRef = React.useRef<any>(null);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -112,12 +129,23 @@ function TabNavigatorWithInsets() {
           tabBarHideOnKeyboard: true,
         };
       }}
+      // Reset PlayStack to HomeScreen when Home tab is pressed
+      screenListeners={({ navigation, route }) => ({
+        tabPress: e => {
+          if (route.name === 'Home') {
+            // Use navigation.navigate with a reset action to clear PlayStack
+            navigation.navigate('Home', {
+              screen: 'Home',
+              params: {},
+            });
+          }
+        },
+      })}
     >
-  <Tab.Screen name="Home" component={HomeScreen} />
-  <Tab.Screen name="Number Selector" component={NumberStack} options={{ headerShown: false }} />
-  <Tab.Screen name="Past Scores" component={PastScoresScreen} />
-  <Tab.Screen name="Settings" component={SettingsScreen} />
-  <Tab.Screen name="About" component={AboutScreen} />
+      <Tab.Screen name="Home" component={PlayStack} options={{ headerShown: false }} />
+      <Tab.Screen name="Past Scores" component={PastScoresScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="About" component={AboutScreen} />
     </Tab.Navigator>
   );
 }

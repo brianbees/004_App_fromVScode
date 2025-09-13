@@ -9,7 +9,7 @@ export default function HomeScreen({ navigation }: any) {
   const { theme } = useDS();
   const handleSelectNumber = (num: number) => {
     if (navigation) {
-      navigation.getParent()?.navigate('MainTabs', { screen: 'Number Selector', params: { screen: `Number${num}` } });
+      navigation.navigate(`Number${num}`);
     }
   };
 
@@ -44,13 +44,13 @@ export default function HomeScreen({ navigation }: any) {
         {[1, 2, 3, 4].map((num) => (
           <TouchableOpacity
             key={num}
-            style={[GlobalStyles.button, { backgroundColor: theme.colors.primary }]}
+            style={[GlobalStyles.button, { backgroundColor: '#fff' }]}
             activeOpacity={0.7}
             accessibilityRole="button"
             accessibilityLabel={`Select number ${num}`}
             onPress={() => handleSelectNumber(num)}
           >
-            <Text style={[GlobalStyles.buttonText, { color: theme.colors.onPrimary }]}>{num}</Text>
+            <Text style={[GlobalStyles.buttonText, { color: theme.colors.primary }]}>{num}</Text>
           </TouchableOpacity>
         ))}
       </View>

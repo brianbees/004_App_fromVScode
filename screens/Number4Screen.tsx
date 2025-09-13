@@ -82,8 +82,8 @@ export default function Number4Screen() {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start', gap: 16 }}>
+        {/* Player 1 Panel */}
         <View style={{ width: '45%', minWidth: 180 }}>
-          {/* Player 1 Panel */}
           <View style={ScorePanelStyles.card}>
             <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: theme.colors.text }}>Player 1</Text>
             <TextInput
@@ -111,8 +111,8 @@ export default function Number4Screen() {
             </View>
           </View>
         </View>
+        {/* Player 2 Panel */}
         <View style={{ width: '45%', minWidth: 180 }}>
-          {/* Player 2 Panel */}
           <View style={ScorePanelStyles.card}>
             <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: theme.colors.text }}>Player 2</Text>
             <TextInput
@@ -140,29 +140,79 @@ export default function Number4Screen() {
             </View>
           </View>
         </View>
+        {/* Player 3 Panel */}
+        <View style={{ width: '45%', minWidth: 180 }}>
+          <View style={ScorePanelStyles.card}>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: theme.colors.text }}>Player 3</Text>
+            <TextInput
+              style={ScorePanelStyles.playerName}
+              placeholder="Player 3 - add name"
+              value={player3Name}
+              onChangeText={setPlayer3Name}
+              placeholderTextColor={theme.colors.text}
+            />
+            <View style={ScorePanelStyles.scoreBox}>
+              <Text style={[ScorePanelStyles.scoreText, { color: theme.colors.text }]}>{score3}</Text>
+            </View>
+            <View style={ScorePanelStyles.buttonRow}>
+              <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints3(10)}>
+                <Text style={ScorePanelStyles.buttonText}>+10 Points</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints3(5)}>
+                <Text style={ScorePanelStyles.buttonText}>+5 Points</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[ScorePanelStyles.buttonRow, { justifyContent: 'center', marginTop: 10 }]}> 
+              <TouchableOpacity style={[ScorePanelStyles.button, { backgroundColor: '#f5e9e0', flex: 1, maxWidth: '100%' }]} onPress={undoLast3}>
+                <Text style={ScorePanelStyles.buttonText}>Undo</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        {/* Player 4 Panel */}
+        <View style={{ width: '45%', minWidth: 180 }}>
+          <View style={ScorePanelStyles.card}>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: theme.colors.text }}>Player 4</Text>
+            <TextInput
+              style={ScorePanelStyles.playerName}
+              placeholder="Player 4 - add name"
+              value={player4Name}
+              onChangeText={setPlayer4Name}
+              placeholderTextColor={theme.colors.text}
+            />
+            <View style={ScorePanelStyles.scoreBox}>
+              <Text style={[ScorePanelStyles.scoreText, { color: theme.colors.text }]}>{score4}</Text>
+            </View>
+            <View style={ScorePanelStyles.buttonRow}>
+              <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints4(10)}>
+                <Text style={ScorePanelStyles.buttonText}>+10 Points</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints4(5)}>
+                <Text style={ScorePanelStyles.buttonText}>+5 Points</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[ScorePanelStyles.buttonRow, { justifyContent: 'center', marginTop: 10 }]}> 
+              <TouchableOpacity style={[ScorePanelStyles.button, { backgroundColor: '#f5e9e0', flex: 1, maxWidth: '100%' }]} onPress={undoLast4}>
+                <Text style={ScorePanelStyles.buttonText}>Undo</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </View>
       {/* End Match Button */}
       <View style={{ marginTop: 32, alignItems: 'center' }}>
         <TouchableOpacity
           style={{ backgroundColor: '#4dd0e1', width: 180, alignSelf: 'center', borderRadius: 8, paddingVertical: 12, alignItems: 'center', marginTop: 8, elevation: 2 }}
           onPress={() => {
-            const scores = [score1, score2, score3, score4];
-            const names = [player1Name || 'Player 1', player2Name || 'Player 2', player3Name || 'Player 3', player4Name || 'Player 4'];
-            const maxScore = Math.max(...scores);
-            const winnerIndex = scores.indexOf(maxScore);
-            const winnerName = names[winnerIndex];
-            navigation.getParent()?.navigate('MainTabs', {
-              screen: 'Winners',
-              params: {
-                playerName: player1Name,
-                playerName2: player2Name,
-                playerName3: player3Name,
-                playerName4: player4Name,
-                score: score1,
-                score2: score2,
-                score3: score3,
-                score4: score4
-              }
+            navigation.navigate('Winners', {
+              playerName: player1Name,
+              playerName2: player2Name,
+              playerName3: player3Name,
+              playerName4: player4Name,
+              score: score1,
+              score2: score2,
+              score3: score3,
+              score4: score4
             });
           }}
         >

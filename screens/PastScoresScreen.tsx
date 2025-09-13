@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
+import GlobalStyles from '../src/components/GlobalStyles';
 
 const mockPastScores = [
   { id: '1', date: '2025-09-01', winner: 'Brian', score: 12 },
@@ -8,13 +9,13 @@ const mockPastScores = [
 
 export default function PastScoresScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Past Scores</Text>
+    <View style={{ ...GlobalStyles.container, padding: 16 }}>
+      <Text style={GlobalStyles.title}>Past Scores</Text>
       <FlatList
         data={mockPastScores}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <View style={styles.item}>
+          <View style={{ padding: 8, borderBottomWidth: 1, borderBottomColor: '#eee' }}>
             <Text>{item.date}: {item.winner} ({item.score})</Text>
           </View>
         )}
@@ -26,21 +27,4 @@ export default function PastScoresScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  item: {
-    padding: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-});
+

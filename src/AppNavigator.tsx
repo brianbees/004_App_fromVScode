@@ -113,21 +113,26 @@ function TabNavigatorWithInsets() {
         };
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Number Selector" component={NumberStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Past Scores" component={PastScoresScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-      <Tab.Screen name="About" component={AboutScreen} />
+  <Tab.Screen name="Home" component={HomeScreen} />
+  <Tab.Screen name="Number Selector" component={NumberStack} options={{ headerShown: false }} />
+  <Tab.Screen name="Past Scores" component={PastScoresScreen} />
+  <Tab.Screen name="Settings" component={SettingsScreen} />
+  <Tab.Screen name="About" component={AboutScreen} />
     </Tab.Navigator>
   );
 }
+
+const RootStack = createNativeStackNavigator();
 
 export default function AppNavigator() {
   return (
     <>
       <StatusBar style="dark" translucent={false} backgroundColor="#ffffff" />
       <NavigationContainer theme={AppTheme}>
-        <TabNavigatorWithInsets />
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          <RootStack.Screen name="MainTabs" component={TabNavigatorWithInsets} />
+          <RootStack.Screen name="AppearanceSettings" component={require('../screens/AppearanceSettingsScreen').default} />
+        </RootStack.Navigator>
       </NavigationContainer>
     </>
   );

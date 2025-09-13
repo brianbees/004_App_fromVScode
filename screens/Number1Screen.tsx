@@ -6,7 +6,7 @@ export default function Number1Screen() {
   const [playerName, setPlayerName] = useState('');
   const [score, setScore] = useState(0);
   const [history, setHistory] = useState<number[]>([]);
-
+  const { theme } = require('../design-system/DesignSystemProvider').useDS();
   const addPoints = (points: number) => {
     setHistory((prev) => [...prev, score]);
     setScore(score + points);
@@ -17,34 +17,35 @@ export default function Number1Screen() {
       setHistory(history.slice(0, -1));
     }
   };
-
+  const navigation = require('@react-navigation/native').useNavigation();
   return (
-  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e0e0e0' }}>
-  <View style={{paddingHorizontal: 24, width: '100%', alignItems: 'center'}}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}>
+      <View style={{paddingHorizontal: 24, width: '100%', alignItems: 'center'}}>
         <View style={ScorePanelStyles.card}>
-        <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8 }}>Player 1</Text>
-        <TextInput
-          style={ScorePanelStyles.playerName}
-          placeholder="Player 1 - add name"
-          value={playerName}
-          onChangeText={setPlayerName}
-        />
-        <View style={ScorePanelStyles.scoreBox}>
-          <Text style={ScorePanelStyles.scoreText}>{score}</Text>
-        </View>
-        <View style={ScorePanelStyles.buttonRow}>
-          <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints(10)}>
-            <Text style={ScorePanelStyles.buttonText}>+10 Points</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints(5)}>
-            <Text style={ScorePanelStyles.buttonText}>+5 Points</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={[ScorePanelStyles.buttonRow, { justifyContent: 'center', marginTop: 10 }]}> 
-          <TouchableOpacity style={[ScorePanelStyles.button, { backgroundColor: '#f5e9e0', flex: 1, maxWidth: '100%' }]} onPress={undoLast}>
-            <Text style={ScorePanelStyles.buttonText}>Undo</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8, color: theme.colors.text }}>Player 1</Text>
+          <TextInput
+            style={ScorePanelStyles.playerName}
+            placeholder="Player 1 - add name"
+            value={playerName}
+            onChangeText={setPlayerName}
+            placeholderTextColor={theme.colors.text}
+          />
+          <View style={ScorePanelStyles.scoreBox}>
+            <Text style={[ScorePanelStyles.scoreText, { color: theme.colors.text }]}>{score}</Text>
+          </View>
+          <View style={ScorePanelStyles.buttonRow}>
+            <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints(10)}>
+              <Text style={ScorePanelStyles.buttonText}>+10 Points</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={ScorePanelStyles.button} onPress={() => addPoints(5)}>
+              <Text style={ScorePanelStyles.buttonText}>+5 Points</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[ScorePanelStyles.buttonRow, { justifyContent: 'center', marginTop: 10 }]}> 
+            <TouchableOpacity style={[ScorePanelStyles.button, { backgroundColor: '#f5e9e0', flex: 1, maxWidth: '100%' }]} onPress={undoLast}>
+              <Text style={ScorePanelStyles.buttonText}>Undo</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       {/* End Match Button */}
@@ -52,14 +53,13 @@ export default function Number1Screen() {
         <TouchableOpacity
           style={{ backgroundColor: '#4dd0e1', width: 180, alignSelf: 'center', borderRadius: 8, paddingVertical: 12, alignItems: 'center', marginTop: 8, elevation: 2 }}
           onPress={() => {
-            // Only one player
-            alert(`Winner: ${playerName || 'Player 1'} with ${score} points!`);
+            navigation.getParent()?.navigate('MainTabs', { screen: 'Winners', params: { playerName: playerName, score: score } });
           }}
         >
-          <Text style={{ color: '#000', fontSize: 18, fontWeight: 'bold' }}>End Match</Text>
+          <Text style={{ color: theme.colors.text, fontSize: 18, fontWeight: 'bold' }}>End Match</Text>
         </TouchableOpacity>
       </View>
-  </ScrollView>
+    </ScrollView>
   );
 }
 

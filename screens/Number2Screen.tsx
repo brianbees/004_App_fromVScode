@@ -1,9 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-// ...existing code...
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import ScorePanelStyles from '../src/components/ScorePanelStyles';
-
+// ...existing code...
 export default function Number2Screen() {
+  const navigation = useNavigation();
   // Player 1 state
   const [player1Name, setPlayer1Name] = useState('');
   const [score1, setScore1] = useState(0);
@@ -95,13 +96,16 @@ export default function Number2Screen() {
         <TouchableOpacity
           style={{ backgroundColor: '#4dd0e1', width: 180, alignSelf: 'center', borderRadius: 8, paddingVertical: 12, alignItems: 'center', marginTop: 8, elevation: 2 }}
           onPress={() => {
-            // Calculate winner for 2 players
             const scores = [score1, score2];
             const names = [player1Name || 'Player 1', player2Name || 'Player 2'];
             const maxScore = Math.max(...scores);
             const winnerIndex = scores.indexOf(maxScore);
             const winnerName = names[winnerIndex];
-            alert(`Winner: ${winnerName} with ${maxScore} points!`);
+            navigation.navigate('Winners', {
+              winnerName,
+              scores,
+              playerNames: names
+            });
           }}
         >
           <Text style={{ color: '#000', fontSize: 18, fontWeight: 'bold' }}>End Match</Text>

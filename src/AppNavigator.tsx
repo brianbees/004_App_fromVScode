@@ -12,6 +12,7 @@ import Number1Screen from '../screens/Number1Screen';
 import Number2Screen from '../screens/Number2Screen';
 import Number3Screen from '../screens/Number3Screen';
 import Number4Screen from '../screens/Number4Screen';
+import WinnersScreen from '../screens/winners';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,7 +25,8 @@ function NumberStack() {
       <Stack.Screen name="Number2" component={Number2Screen} />
       <Stack.Screen name="Number3" component={Number3Screen} />
       <Stack.Screen name="Number4" component={Number4Screen} />
-      <Stack.Screen name="Score" component={ScoreScreen} />
+  <Stack.Screen name="Score" component={ScoreScreen} />
+  <Stack.Screen name="Winners" component={WinnersScreen} />
     </Stack.Navigator>
   );
 }

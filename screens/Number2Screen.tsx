@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native';
 import ScorePanelStyles from '../src/components/ScorePanelStyles';
 // ...existing code...
 export default function Number2Screen() {
@@ -36,8 +36,9 @@ export default function Number2Screen() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e0e0e0' }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start', gap: 16 }}>
+  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e0e0e0' }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start', gap: 16 }}>
+        <View style={{ width: '45%', minWidth: 180 }}>
         {/* Player 1 Panel */}
         <View style={ScorePanelStyles.card}>
           <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8 }}>Player 1</Text>
@@ -64,6 +65,8 @@ export default function Number2Screen() {
             </TouchableOpacity>
           </View>
         </View>
+        </View>
+        <View style={{ width: '45%', minWidth: 180 }}>
         {/* Player 2 Panel */}
         <View style={ScorePanelStyles.card}>
           <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8 }}>Player 2</Text>
@@ -90,6 +93,7 @@ export default function Number2Screen() {
             </TouchableOpacity>
           </View>
         </View>
+        </View>
       </View>
       {/* End Match Button */}
       <View style={{ marginTop: 32, alignItems: 'center' }}>
@@ -102,15 +106,16 @@ export default function Number2Screen() {
             const winnerIndex = scores.indexOf(maxScore);
             const winnerName = names[winnerIndex];
             navigation.navigate('Winners', {
-              winnerName,
-              scores,
-              playerNames: names
+              playerName: player1Name,
+              playerName2: player2Name,
+              score: score1,
+              score2: score2
             });
           }}
         >
           <Text style={{ color: '#000', fontSize: 18, fontWeight: 'bold' }}>End Match</Text>
         </TouchableOpacity>
       </View>
-    </View>
+  </ScrollView>
   );
 }

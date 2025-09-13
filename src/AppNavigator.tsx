@@ -30,7 +30,7 @@ function NumberStack() {
         headerShadowVisible: false,
       }}
     >
-      <Stack.Screen name="Number Selector" component={NumberSelectorScreen} />
+  <Stack.Screen name="Select Number" component={NumberSelectorScreen} />
       <Stack.Screen name="Number1" component={Number1Screen} />
       <Stack.Screen name="Number2" component={Number2Screen} />
       <Stack.Screen name="Number3" component={Number3Screen} />

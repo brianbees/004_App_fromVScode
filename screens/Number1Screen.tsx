@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import ScorePanelStyles from '../src/components/ScorePanelStyles';
 
 export default function Number1Screen() {
@@ -19,7 +19,7 @@ export default function Number1Screen() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e0e0e0' }}>
+  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e0e0e0' }}>
       <View style={ScorePanelStyles.card}>
         <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8 }}>Player 1</Text>
         <TextInput
@@ -57,7 +57,7 @@ export default function Number1Screen() {
           <Text style={{ color: '#000', fontSize: 18, fontWeight: 'bold' }}>End Match</Text>
         </TouchableOpacity>
       </View>
-    </View>
+  </ScrollView>
   );
 }
 

@@ -25,15 +25,15 @@ function PlayStack() {
   return (
     <Stack.Navigator
       key="PlayStack"
-      ref={playStackRef}
       screenOptions={{ headerTitleAlign: 'center', headerShadowVisible: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+  <Stack.Screen name="HomeMain" component={HomeScreen} />
       <Stack.Screen name="Number1" component={Number1Screen} />
       <Stack.Screen name="Number2" component={Number2Screen} />
       <Stack.Screen name="Number3" component={Number3Screen} />
       <Stack.Screen name="Number4" component={Number4Screen} />
       <Stack.Screen name="Score" component={ScoreScreen} />
-      <Stack.Screen name="Winners" component={WinnersScreen} />
+  <Stack.Screen name="Winners" component={WinnersScreen} />
+  
     </Stack.Navigator>
   );
 }
@@ -135,7 +135,7 @@ function TabNavigatorWithInsets() {
           if (route.name === 'Home') {
             // Use navigation.navigate with a reset action to clear PlayStack
             navigation.navigate('Home', {
-              screen: 'Home',
+              screen: 'HomeMain',
               params: {},
             });
           }
@@ -145,7 +145,8 @@ function TabNavigatorWithInsets() {
       <Tab.Screen name="Home" component={PlayStack} options={{ headerShown: false }} />
       <Tab.Screen name="Past Scores" component={PastScoresScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
-      <Tab.Screen name="About" component={AboutScreen} />
+  <Tab.Screen name="About" component={AboutScreen} />
+  {/* Removed AsyncStorageTest debug tab */}
     </Tab.Navigator>
   );
 }

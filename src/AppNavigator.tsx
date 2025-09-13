@@ -30,7 +30,7 @@ function NumberStack() {
         headerShadowVisible: false,
       }}
     >
-  <Stack.Screen name="Select Number" component={NumberSelectorScreen} />
+  <Stack.Screen name="Number Selector" component={NumberSelectorScreen} />
       <Stack.Screen name="Number1" component={Number1Screen} />
       <Stack.Screen name="Number2" component={Number2Screen} />
       <Stack.Screen name="Number3" component={Number3Screen} />
@@ -97,7 +97,6 @@ function TabNavigatorWithInsets() {
                   zIndex: 10,
                   minHeight: 62,
                   paddingTop: 6,
-                  paddingBottom: bottomPad,
                   borderTopWidth: 1,
                   borderTopColor: '#e5e7eb',
                   backgroundColor: '#ffffff',
@@ -106,7 +105,6 @@ function TabNavigatorWithInsets() {
                   position: 'relative',
                   minHeight: 62,
                   paddingTop: 6,
-                  paddingBottom: bottomPad,
                   borderTopWidth: 1,
                   borderTopColor: '#e5e7eb',
                   backgroundColor: '#ffffff',
@@ -126,11 +124,11 @@ function TabNavigatorWithInsets() {
 
 export default function AppNavigator() {
   return (
-    <SafeAreaProvider>
+    <>
       <StatusBar style="dark" translucent={false} backgroundColor="#ffffff" />
       <NavigationContainer theme={AppTheme}>
         <TabNavigatorWithInsets />
       </NavigationContainer>
-    </SafeAreaProvider>
+    </>
   );
 }

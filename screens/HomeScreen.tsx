@@ -16,16 +16,16 @@ export default function HomeScreen({ navigation }: any) {
     if (!navigation) return;
     switch (where) {
       case 'Settings':
-        navigation.navigate('SettingsScreen');
+        navigation.navigate('Settings');
         break;
       case 'PastScores':
-        navigation.navigate('PastScoresScreen');
+        navigation.navigate('Past Scores');
         break;
       case 'About':
-        navigation.navigate('AboutScreen');
+        navigation.navigate('About');
         break;
       case 'Home':
-        navigation.navigate('HomeScreen');
+        navigation.navigate('Home');
         break;
       default:
         break;

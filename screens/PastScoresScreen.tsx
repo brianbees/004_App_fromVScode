@@ -1,11 +1,41 @@
 import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../src/components/GlobalStyles';
 import { useDS } from '../design-system/DesignSystemProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as FileSystem from 'expo-file-system/legacy';
+import * as Sharing from 'expo-sharing';
 
 export default function PastScoresScreen() {
+  const exportHistory = async () => {
+    try {
+      const data = await AsyncStorage.getItem('gameHistory');
+      if (!data) {
+        alert('No history to export.');
+        return;
+      }
+      const history = JSON.parse(data);
+      // Build CSV header
+      let csv = 'Date,Winner(s),Is Tie,Players & Scores,Notes\n';
+      for (const entry of history) {
+        const date = entry.date;
+        const winners = Array.isArray(entry.winner) ? entry.winner.join(' | ') : entry.winner;
+        const isTie = entry.isTie ? 'Yes' : 'No';
+        const players = entry.players ? entry.players.map(p => `${p.name}: ${p.score}`).join(' | ') : '';
+        const notes = entry.notes ? entry.notes.replace(/\n/g, ' ') : '';
+        csv += `"${date}","${winners}","${isTie}","${players}","${notes}"\n`;
+      }
+      const fileUri = FileSystem.cacheDirectory + 'gameHistory.csv';
+      await FileSystem.writeAsStringAsync(fileUri, csv, { encoding: 'utf8' });
+      await Sharing.shareAsync(fileUri, {
+        mimeType: 'text/csv',
+        dialogTitle: 'Share your game history (CSV)',
+      });
+    } catch (err) {
+  alert('Export failed: ' + String(err));
+    }
+  };
   const { theme } = useDS();
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +67,17 @@ export default function PastScoresScreen() {
   );
 
   return (
-    <View style={[GlobalStyles.container, { backgroundColor: theme.colors.background, padding: 16 }]}>
+    <View style={[GlobalStyles.container, { backgroundColor: theme.colors.background, padding: 16 }]}> 
+      <Text style={{ marginBottom: 12 }}>
+        <Text style={{ fontWeight: 'bold' }}>Export:</Text> 
+        <Text> You can export your game history to a file and share it to cloud storage, email, or other apps.</Text>
+      </Text>
+      <TouchableOpacity
+        style={{ backgroundColor: theme.colors.primary, padding: 12, borderRadius: 8, marginBottom: 16, alignSelf: 'center' }}
+        onPress={exportHistory}
+      >
+        <Text style={{ color: theme.colors.background, fontWeight: 'bold' }}>Export History</Text>
+      </TouchableOpacity>
       <Text style={[GlobalStyles.title, { color: theme.colors.text }]}>Past Scores</Text>
       {loading ? (
         <ActivityIndicator size="large" color={theme.colors.primary} />

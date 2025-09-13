@@ -20,7 +20,8 @@ export default function Number1Screen() {
 
   return (
   <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e0e0e0' }}>
-      <View style={ScorePanelStyles.card}>
+  <View style={{paddingHorizontal: 24, width: '100%', alignItems: 'center'}}>
+        <View style={ScorePanelStyles.card}>
         <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8 }}>Player 1</Text>
         <TextInput
           style={ScorePanelStyles.playerName}
@@ -43,6 +44,7 @@ export default function Number1Screen() {
           <TouchableOpacity style={[ScorePanelStyles.button, { backgroundColor: '#f5e9e0', flex: 1, maxWidth: '100%' }]} onPress={undoLast}>
             <Text style={ScorePanelStyles.buttonText}>Undo</Text>
           </TouchableOpacity>
+        </View>
         </View>
       </View>
       {/* End Match Button */}
